@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Devindiii</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+        }
+        h1 {
+            color: #d63384;
+        }
+        .game-container {
+            margin-top: 20px;
+        }
+        .box {
+            width: 50px;
+            height: 50px;
+            background-color: pink;
+            display: inline-block;
+            margin: 5px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+            font-weight: bold;
+            font-size: 20px;
+            border-radius: 5px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            font-size: 50px;
+            font-weight: bold;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .popup img {
+            max-width: 80%;
+            max-height: 80%;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        .question {
+            display: none;
+            font-size: 30px;
+            margin-top: 20px;
+        }
+        .question button {
+            font-size: 20px;
+            margin: 10px;
+            padding: 10px;
+        }
+        .big-message {
+            font-size: 80px;
+            color: red;
+            font-weight: bold;
+            display: none;
+        }
+        .heart {
+            display: none;
+            font-size: 50px;
+            color: red;
+            cursor: pointer;
+        }
+        .love-letter {
+            display: none;
+            font-size: 30px;
+            color: #d63384;
+            margin-top: 20px;
+        }
+
+        #loveLetter img {
+            max-width: 80%;
+            max-height: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .message {
+            display: none;
+            font-size: 20px;
+            color: #d63384;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, Devinfi ❤️</h1>
+    <p>You are the most special person in my life.</p>
+    <p>Win the game below to unlock your surprise!</p>
+    
+    <div class="game-container" id="gameContainer">
+        <p>Find the correct heart! Click on one box to win:</p>
+        <div id="boxes"></div>
+    </div>
+    
+    <div id="popup" class="popup">
+        <p id="popupMessage" style="display: none;">huuhuu buuruwaa</p>
+        <img id="popupImage" src="hehe.jpg" alt="">
+        <div id="question1" class="question">
+            <p>Do you still love me? ❤️</p>
+            <button onclick="nextQuestion()">Yes</button>
+            <button id="noButton" onclick="removeNo()">No</button>
+        </div>
+        <div id="question2" class="question">
+            <p>So, you’re not gonna leave me?</p>
+            <button onclick="noLeave()">No</button>
+            <button onclick="neverLeave()">Nooo babe, I'm never gonna leave you</button>
+        </div>
+        <div id="question3" class="question">
+            <p>Are you gonna forgive me for every bad thing I've done?</p>
+            <button onclick="forgiveMe()">Yes</button>
+            <button onclick="notForgiveMe()">No</button>
+        </div>
+        <div id="elaMessage" class="big-message">
+            Ela 😢
+        </div>
+        <div id="replyMessage" class="big-message" style="display: none;"></div>
+        <div id="heart" class="heart" onclick="growHeart()">❤️</div>
+    
+        <div id="loveLetter" class="love-letter">
+            <h2>My Princess,</h2>
+            <p>My love, I just want to take this moment to tell you how incredibly special you are to me. From the day you said "yes" to me on January 6, 2024, my life has been filled with joy, love, and the most beautiful moments. 
+            You are my light, my happiness, and my greatest blessing. Every laugh, every moment, and every little thing about you makes my world brighter.</p>
+            <p>I also want to say I’m truly sorry for anything I’ve done that has ever made you sad. Hurting you is the last thing I would ever want to do, and I promise to always cherish and love you with all my heart. You mean everything to me, and I will always do my best to make you happy.</p>
+            <p>I love you endlessly, Devindiii. Thank you for being my everything. ❤️</p>
+            <img src="usbby.jpg" alt="A special moment together">
+            <audio controls autoplay>
+                <source src="my love all mine.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <br>
+            <button onclick="hideMessage()">Back</button>
+        </div>
+    </div>
+
+    <script>
+        let popupShown = false; 
+        let fullScreenMessageShown = false; 
+
+        function generateGame() {
+            const gameContainer = document.getElementById("boxes");
+            gameContainer.innerHTML = "";
+            let attempts = 0;
+            const totalBoxes = 6;
+            for (let i = 0; i < totalBoxes; i++) {
+                let box = document.createElement("div");
+                box.classList.add("box");
+                box.textContent = "?";
+                box.onclick = function() {
+                    if (box.textContent === "?") {
+                        box.style.backgroundColor = "lightgray";
+                        box.textContent = "X";
+                        attempts++;
+                        if (attempts === totalBoxes && !popupShown) {
+                            popupShown = true;
+                            setTimeout(() => {
+                                document.getElementById("gameContainer").style.display = "none";
+                                document.getElementById("popup").style.display = "flex";
+                                document.getElementById("popupMessage").style.display = "block";
+                                setTimeout(() => {
+                                    document.getElementById("popupMessage").style.display = "none";
+                                    document.getElementById("question1").style.display = "block";
+                                }, 2000);
+                                
+                                // Show and hide the image after 4 seconds
+                                const popupImage = document.getElementById("popupImage");
+                                popupImage.style.display = "block";
+                                setTimeout(() => {
+                                    popupImage.style.display = "none";
+                                }, 2100); // 4000 milliseconds = 4 seconds
+                            }, 500);
+                        }
+                    }
+                };
+                gameContainer.appendChild(box);
+            }
+        }
+        
+
+        function removeNo() {
+            document.getElementById("noButton").style.display = "none";
+        }
+        
+
+        function nextQuestion() {
+            showReplyMessage("Yay! You still love me! ❤️");
+            document.getElementById("question1").style.display = "none";
+            document.getElementById("question2").style.display = "block";
+        }
+
+        function noLeave() {
+            if (!fullScreenMessageShown) {
+                fullScreenMessageShown = true;
+                showFullScreenMessage("humm i prolly deserved 😢");  
+                setTimeout(() => {
+                    hideFullScreenMessage();
+                    document.getElementById("question2").style.display = "none";
+                    document.getElementById("question1").style.display = "block"; 
+                    fullScreenMessageShown = false;
+                }, 3000);
+            }
+        }
+
+        function neverLeave() {
+            showReplyMessage("Aww, you're the best bbiiiii! ❤️");
+            document.getElementById("question2").style.display = "none";
+            document.getElementById("question3").style.display = "block";
+        }
+
+        function forgiveMe() {
+            showReplyMessage("Thank you chuuutiiiiiiiii. ❤️");
+            document.getElementById("question3").style.display = "none";
+            document.getElementById("heart").style.display = "block";
+        }
+
+        function notForgiveMe() {
+            const message = prompt("Please type a message why you can't forgive me:");
+            if (message) {
+                saveMessageToNotepad(message);
+                showReplyMessage("I understand humm. ❤️");
+            }
+            document.getElementById("question3").style.display = "none";
+            document.getElementById("heart").style.display = "block";
+        }
+
+        function showFullScreenMessage(message) {
+            const messageElement = document.getElementById("elaMessage");
+            messageElement.innerHTML = message;
+            messageElement.style.display = "flex";  
+        }
+
+        function hideFullScreenMessage() {
+            const messageElement = document.getElementById("elaMessage");
+            messageElement.style.display = "none";  
+        }
+
+        function showReplyMessage(message) {
+            const messageElement = document.getElementById("replyMessage");
+            messageElement.innerHTML = message;
+            messageElement.style.display = "flex";  
+            setTimeout(() => {
+                messageElement.style.display = "none";
+            }, 3000);
+        }
+
+        function saveMessageToNotepad(message) {
+            const blob = new Blob([message], { type: "text/plain;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "forgiveness_message.txt";
+            link.click();
+        }
+
+        function growHeart() {
+            const heart = document.getElementById("heart");
+            let size = parseInt(window.getComputedStyle(heart).fontSize);
+            size += 10;
+            heart.style.fontSize = size + "px";
+            if (size >= window.innerHeight) {
+                heart.style.display = "none";
+                document.getElementById("loveLetter").style.display = "block";
+                playAudio();
+            }
+        }
+
+        function playAudio() {
+            const audio = new Audio('my_love_all_mine.mp3');
+            audio.play();
+        }
+
+        function hideMessage() {
+            document.getElementById("loveLetter").style.display = "none";
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("gameContainer").style.display = "block";
+            generateGame();
+        }
+
+        generateGame();
+        
+    </script>
+</body>
+</html>
